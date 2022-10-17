@@ -1,0 +1,66 @@
+version: '3.0'
+services:
+#  sqlserver:
+#    image: mcr.microsoft.com/mssql/server:2019-latest
+#    environment:
+#      ACCEPT_EULA: 'Y'
+#      MSSQL_PID: 'Developer'
+#      SA_PASSWORD: 'Omega@2020'
+#    ports:
+#      - "1433:1433"
+
+#  postgresql:
+#    image: 'postgres:11.1'
+#    ports:
+#      - '5432:5432'
+#    environment:
+#      POSTGRES_DB: omegadb
+#      POSTGRES_HOST_AUTH_METHOD: 'trust'
+#      POSTGRES_PASSWORD: postgres
+#
+#  postgres-sink:
+#    image: 'postgresql-jdbc-sink:latest'
+#    volumes:
+#      - './configs/postgres-sink/connect-standalone.properties:/bitnami/kafka/config/connect-standalone.properties'
+#      - './configs/postgres-sink/jdbc-sink.properties:/bitnami/kafka/config/jdbc-sink.properties'
+
+  sqlserver-connector:
+    image: 'sql-server-debezium:latest'
+    volumes:
+      - './configs/sqlserver-connector/connect-standalone.properties:/bitnami/kafka/config/connect-standalone.properties'
+      - './configs/sqlserver-connector/debezium.properties:/bitnami/kafka/config/debezium.properties'
+
+#  zookeeper:
+#    image: 'confluentinc/cp-zookeeper:5.5.1'
+#    environment:
+#      ZOOKEEPER_CLIENT_PORT: 2181
+#      ZOOKEEPER_TICK_TIME: 2000
+#
+#  kafka:
+#    image: 'confluentinc/cp-kafka:5.5.1'
+#    depends_on:
+#      - zookeeper
+#    ports:
+#      - '9092:9092'
+#    environment:
+#      KAFKA_BROKER_ID: 1
+#      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+#      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
+#      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092'
+#      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+#  zookeeper:
+#    image: 'bitnami/zookeeper:latest'
+#    environment:
+#      ALLOW_ANONYMOUS_LOGIN: 'yes'
+
+#  kafka-kafdrop:
+#    image: obsidiandynamics/kafdrop
+#    depends_on:
+#      - sqlserver-connector
+#    ports:
+#      - '9000:9000'
+#    environment:
+#      KAFKA_BROKERCONNECT: 'sqlserver-connector:29092'
+#      JVM_OPTS: -Xms32M -Xmx64M
+#      SERVER_SERVLET_CONTEXTPATH: /
